@@ -4,21 +4,21 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SET NOCOUNT ON;\n\nINSERT INTO CADASTRO_ITEM_FISCAL\n(ITEM_DESCRICAO\n  , CODIGO_ITEM\n  , UNIDADE,TRIBUT_ORIGEM\n  , CLASSIF_FISCAL\n  , CONTA_CONTABIL\n  , INDICADOR_CFOP\n  , ITEM_FISCAL_GRUPO\n  , TIPO_ITEM_SPED\n  , IDENT_UTILIZACAO_IMOB)\nVALUES\n('{{ $('Loop Over Items').item.json['Nome do item'] }}'\n  , '{{ $('Edit Fields 4').item.json['Codigo do item'] }}'\n  , 'UN'\n  , '{{ $('Loop Over Items').item.json.CST }}'\n  , '{{ $('Loop Over Items').item.json.NCM }}'\n  , '{{ $json.numero_conta }}'\n  , '13'\n  , '02'\n  , '07'\n  , '9')\n\n\n\n"
+        "query": "SET NOCOUNT ON;\n\nINSERT INTO CADASTRO_ITEM_FISCAL\n(ITEM_DESCRICAO\n  , CODIGO_ITEM\n  , UNIDADE,TRIBUT_ORIGEM\n  , CLASSIF_FISCAL\n  , CONTA_CONTABIL\n  , INDICADOR_CFOP\n  , ITEM_FISCAL_GRUPO\n  , TIPO_ITEM_SPED\n  , IDENT_UTILIZACAO_IMOB)\nVALUES\n('{{ $('Loop Over Items').item.json['Nome do item'] }}'\n  , '{{ $('Edit Fields 4').item.json['Codigo do item'] }}'\n  , 'UN'\n  , '{{ $('Loop Over Items').item.json.CST }}'\n  , '{{ $('Loop Over Items').item.json.NCM }}'\n  , '{{ $('Code in JavaScript').item.json['id_conta'] }}'\n  , '13'\n  , '02'\n  , '07'\n  , '9')\n\n\n\n"
       },
       "type": "n8n-nodes-base.microsoftSql",
       "typeVersion": 1.1,
       "position": [
-        8304,
-        1584
+        7136,
+        704
       ],
-      "id": "29129077-eda7-4095-9c9d-05da4837f6c6",
+      "id": "d7ef2bc0-61e4-412d-b282-5226f3d0afc9",
       "name": "Microsoft SQL",
       "retryOnFail": true,
       "credentials": {
         "microsoftSql": {
-          "id": "8rguz0R8o0fp0CrE",
-          "name": "SQL IB"
+          "id": "KtBQ1uO6JMALaFpK",
+          "name": "Banco IB"
         }
       },
       "onError": "continueErrorOutput"
@@ -50,44 +50,30 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        7440,
-        1424
+        5840,
+        544
       ],
-      "id": "830cce10-b914-4bd8-9392-d67d644e7437",
+      "id": "51523fab-15d1-45e4-89c1-3512acb83f18",
       "name": "If3"
     },
     {
       "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        6752,
-        1424
-      ],
-      "id": "853486fd-cb8c-4366-83a0-de9fa816cecb",
-      "name": "Aggregate"
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
-        "query": "SET NOCOUNT ON;\n\nINSERT INTO CADASTRO_ITEM_FISCAL\n(ITEM_DESCRICAO\n  , CODIGO_ITEM\n  , UNIDADE,TRIBUT_ORIGEM\n  , CLASSIF_FISCAL\n  , CONTA_CONTABIL\n  , INDICADOR_CFOP\n  , ITEM_FISCAL_GRUPO\n  , TIPO_ITEM_SPED\n  , IDENT_UTILIZACAO_IMOB)\nVALUES\n('{{ $('Loop Over Items').item.json['Nome do item'] }}'\n  , '{{ $('Edit Fields 5').item.json['Codigo do item'] }}'\n  , 'UN'\n  , '{{ $('Loop Over Items').item.json.CST }}'\n  , '{{ $('Loop Over Items').item.json.NCM }}'\n  , '{{ $json.numero_conta }}'\n  , '13'\n  , '2'\n  , '07'\n  , '9')"
+        "query": "SET NOCOUNT ON;\n\nINSERT INTO CADASTRO_ITEM_FISCAL\n(ITEM_DESCRICAO\n  , CODIGO_ITEM\n  , UNIDADE\n  , TRIBUT_ORIGEM\n  , CLASSIF_FISCAL\n  , CONTA_CONTABIL\n  , INDICADOR_CFOP\n  , ITEM_FISCAL_GRUPO\n  , TIPO_ITEM_SPED\n  , IDENT_UTILIZACAO_IMOB)\nVALUES\n('{{ $('Loop Over Items').item.json['Nome do item'] }}'\n  , '{{ $('Edit Fields 5').item.json['Codigo do item'] }}'\n  , 'UN'\n  , '{{ $('Loop Over Items').item.json.CST }}'\n  , '{{ $('Loop Over Items').item.json.NCM }}'\n  , '{{ $('Code in JavaScript').item.json['id_conta'] }}'\n  , '13'\n  , '2'\n  , '07'\n  , '9')"
       },
       "type": "n8n-nodes-base.microsoftSql",
       "typeVersion": 1.1,
       "position": [
-        8320,
-        2544
+        7152,
+        1312
       ],
-      "id": "dff35457-1af0-45f6-81a4-f80a3421d2de",
+      "id": "cf2b8685-b430-44b3-a064-ffe19ff00897",
       "name": "Microsoft SQL2",
       "retryOnFail": true,
       "credentials": {
         "microsoftSql": {
-          "id": "OkN54iV2AMtgjIYk",
-          "name": "SQL TH"
+          "id": "UkgZstSJ5Wj9ofPE",
+          "name": "Banco TH"
         }
       },
       "onError": "continueErrorOutput"
@@ -119,44 +105,30 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        7472,
-        2400
+        5872,
+        1136
       ],
-      "id": "9db75fbf-9bc1-4321-b969-e1e68b5521c4",
+      "id": "e80b1087-b315-4677-9292-fd2b64b36911",
       "name": "If4"
     },
     {
       "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        6768,
-        2400
-      ],
-      "id": "6278e485-173c-4bb5-be8a-b597ffd4a054",
-      "name": "Aggregate1"
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
-        "query": "SET NOCOUNT ON;\n\nINSERT INTO CADASTRO_ITEM_FISCAL\n  (ITEM_DESCRICAO\n    , CODIGO_ITEM\n    , UNIDADE\n    , TRIBUT_ORIGEM\n    , CLASSIF_FISCAL\n    , CONTA_CONTABIL\n    , INDICADOR_CFOP\n    , ITEM_FISCAL_GRUPO\n    , TIPO_ITEM_SPED\n    , IDENT_UTILIZACAO_IMOB)\nVALUES\n  ('{{ $('Loop Over Items').item.json['Nome do item'] }}'\n    , '{{ $('Edit Fields 6').item.json['Codigo do item'] }}'\n    , 'UN'\n    , '{{ $('Loop Over Items').item.json.CST }}'\n    , '{{ $('Loop Over Items').item.json.NCM }}'\n    , '{{ $json.numero_conta }}'\n    , '13'\n    , '03'\n    , '07'\n    , '9')"
+        "query": "SET NOCOUNT ON;\n\nINSERT INTO CADASTRO_ITEM_FISCAL\n  (ITEM_DESCRICAO\n    , CODIGO_ITEM\n    , UNIDADE\n    , TRIBUT_ORIGEM\n    , CLASSIF_FISCAL\n    , CONTA_CONTABIL\n    , INDICADOR_CFOP\n    , ITEM_FISCAL_GRUPO\n    , TIPO_ITEM_SPED\n    , IDENT_UTILIZACAO_IMOB)\nVALUES\n  ('{{ $('Loop Over Items').item.json['Nome do item'] }}'\n    , '{{ $('Edit Fields 6').item.json['Codigo do item'] }}'\n    , 'UN'\n    , '{{ $('Loop Over Items').item.json.CST }}'\n    , '{{ $('Loop Over Items').item.json.NCM }}'\n    , '{{ $('Code in JavaScript').item.json['id_conta'] }}'\n    , '13'\n    , '03'\n    , '07'\n    , '9')"
       },
       "type": "n8n-nodes-base.microsoftSql",
       "typeVersion": 1.1,
       "position": [
-        8320,
-        3424
+        7152,
+        1920
       ],
-      "id": "185deaaf-ec17-467e-bc4c-8abdb2c11a51",
+      "id": "48560f60-2ec9-499b-b32c-4fd5bb0c3511",
       "name": "Microsoft SQL3",
       "retryOnFail": true,
       "credentials": {
         "microsoftSql": {
-          "id": "pDQfRZo44eKZeHAY",
-          "name": "SQL SL"
+          "id": "VCEYzouSnFGOmmxO",
+          "name": "Banco salinas"
         }
       },
       "onError": "continueErrorOutput"
@@ -188,40 +160,26 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        7472,
-        3264
+        5872,
+        1728
       ],
-      "id": "972263a1-0b22-46ae-8886-9b4e71f46f36",
+      "id": "be3b75f2-79f5-42c3-ab92-f95ecf06f5ca",
       "name": "If5"
     },
     {
       "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        6752,
-        3264
-      ],
-      "id": "c0c80dcd-d09c-4fe6-bf88-15932f54f796",
-      "name": "Aggregate2"
-    },
-    {
-      "parameters": {
         "content": "## Decisão da conta contábil ",
-        "height": 2128,
+        "height": 1584,
         "width": 320,
         "color": 6
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        6992,
-        1344
+        5392,
+        480
       ],
       "typeVersion": 1,
-      "id": "13d8ef0c-5004-4665-917e-20ef8f27cf5a",
+      "id": "ffa0ce05-5a3b-4ef7-b9d1-ab6c14c268fc",
       "name": "Sticky Note"
     },
     {
@@ -245,16 +203,16 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        5728,
-        3264
+        4704,
+        1728
       ],
-      "id": "49bb703a-80ca-4040-b362-a6787386012c",
+      "id": "98e7f908-bf28-4d96-b0d9-f3ee9b273bd6",
       "name": "Planilha de códigos de itens salinas",
       "retryOnFail": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -279,16 +237,16 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        5744,
-        2400
+        4720,
+        1136
       ],
-      "id": "27d45cf1-6e24-40fc-bb3b-f2fdb2e64572",
+      "id": "7027b9be-f60e-4848-af7d-edfce43f25f1",
       "name": "Planilha de código de itens Tommy",
       "retryOnFail": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -313,118 +271,16 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        5728,
-        1424
+        4704,
+        544
       ],
-      "id": "5edffc27-0e9f-4905-83c9-df685013ff49",
+      "id": "46efb3e6-2b4e-4f5c-860d-8c86dd39d03c",
       "name": "Planilha de código de itens Inbrands",
       "retryOnFail": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI",
-          "mode": "list",
-          "cachedResultName": "Contas contabeis",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 338709825,
-          "mode": "list",
-          "cachedResultName": "Conta IB",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit#gid=338709825"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        6496,
-        1424
-      ],
-      "id": "64c9ddf3-d5f4-433a-b4de-0ae9808d4c77",
-      "name": "Contas contábeis IB",
-      "retryOnFail": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI",
-          "mode": "list",
-          "cachedResultName": "Contas contabeis",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": " Conta TH",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit#gid=0"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        6480,
-        2400
-      ],
-      "id": "72d2b49c-c020-4aa7-965e-07fceb377064",
-      "name": "Contas contábeis TH",
-      "retryOnFail": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI",
-          "mode": "list",
-          "cachedResultName": "Contas contabeis",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 461745371,
-          "mode": "list",
-          "cachedResultName": "Conta SL",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit#gid=461745371"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        6496,
-        3264
-      ],
-      "id": "bef4ad79-8567-4a3d-ad96-6d1c3e25a05d",
-      "name": "Contas contábeis SL",
-      "retryOnFail": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -480,16 +336,16 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        8592,
-        3424
+        7424,
+        1888
       ],
-      "id": "9f39c4b1-d020-4cb6-a7a1-aee7793bc1df",
+      "id": "b181cf07-c941-49ea-9135-2c101e1381df",
       "name": "Planilha para adicionar o item cadastrado SL",
       "retryOnFail": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -545,16 +401,16 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        8608,
-        2544
+        7440,
+        1280
       ],
-      "id": "dc629fe9-8d67-4048-95bd-72fd1ce3c3eb",
+      "id": "f96cd6af-f1e8-4a0f-9d6c-abd5298deaa2",
       "name": "Planilha para adicionar o item cadastrado TH",
       "retryOnFail": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -610,16 +466,16 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        8608,
-        1584
+        7440,
+        704
       ],
-      "id": "babad4f4-2b97-4bb0-84d3-1d55448a67b6",
+      "id": "dbdb0738-1f0c-4452-a3f6-d1ed9ae62c70",
       "name": "Planilha para adicionar o item cadastrado IB",
       "retryOnFail": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "sUNRrZy9VSndkdeJ",
-          "name": "API sheets"
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -632,27 +488,27 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4400,
-        1840
+        3376,
+        576
       ],
       "typeVersion": 1,
-      "id": "36a0959e-3c65-4288-a983-653d945d2dca",
+      "id": "40320b76-f41c-4a4b-86ec-4c7ba27a9a4d",
       "name": "Sticky Note1"
     },
     {
       "parameters": {
         "content": "## Comando do SQL que insere os dados do cadastro direto no banco\n",
-        "height": 2272,
+        "height": 1600,
         "width": 208,
         "color": 2
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        8272,
-        1376
+        7104,
+        480
       ],
       "typeVersion": 1,
-      "id": "8e3f3194-87d4-45de-9ec2-73ff84930323",
+      "id": "b8f6c4ac-bd07-439e-87d9-57fb5ca9e0f4",
       "name": "Sticky Note2"
     },
     {
@@ -664,11 +520,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3584,
-        2304
+        2560,
+        1040
       ],
       "typeVersion": 1,
-      "id": "a1cc5250-aff4-4836-af0b-f1af35fc358b",
+      "id": "a86f208e-8385-4f5d-88ec-66f426a3e811",
       "name": "Sticky Note6"
     },
     {
@@ -779,26 +635,26 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        4464,
-        2384
+        3440,
+        1120
       ],
-      "id": "8c49bf69-74e7-4ff1-b68d-4a131a3a12a5",
+      "id": "0fdf2957-3131-4da3-8a3f-cbb3951ea367",
       "name": "Decisão do Banco de dados"
     },
     {
       "parameters": {
         "content": "## Se nenhuma conta contábil se encaixar com o item, entrara em contato com algum responsável\n",
-        "height": 2256,
+        "height": 1648,
         "width": 272,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        7696,
-        960
+        6096,
+        64
       ],
       "typeVersion": 1,
-      "id": "80cd0948-27d8-40bc-8621-efa0f9709f77",
+      "id": "03f615f2-006d-4315-b747-b08798bd0423",
       "name": "Sticky Note7"
     },
     {
@@ -809,16 +665,16 @@
       "type": "n8n-nodes-base.microsoftSql",
       "typeVersion": 1.1,
       "position": [
-        5088,
-        1360
+        4064,
+        480
       ],
-      "id": "88097f02-6243-4cc8-8bd1-8b30ce0b23e1",
+      "id": "6b0c496b-9a35-487d-8cde-633eaa7e3678",
       "name": "Microsoft SQL4",
       "retryOnFail": true,
       "credentials": {
         "microsoftSql": {
-          "id": "8rguz0R8o0fp0CrE",
-          "name": "SQL IB"
+          "id": "KtBQ1uO6JMALaFpK",
+          "name": "Banco IB"
         }
       }
     },
@@ -849,10 +705,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        5296,
-        1360
+        4272,
+        480
       ],
-      "id": "5a89fedb-572c-4cc6-bfa3-efd392fcf26c",
+      "id": "d7529409-d7cc-4950-a539-ffa317447c73",
       "name": "If6"
     },
     {
@@ -863,16 +719,16 @@
       "type": "n8n-nodes-base.microsoftSql",
       "typeVersion": 1.1,
       "position": [
-        5056,
-        2400
+        4032,
+        1136
       ],
-      "id": "7bd93bfd-984e-4e1d-93d0-5732aaeb6597",
+      "id": "06ce5d3d-bfe3-4dae-aa44-0ea97f115409",
       "name": "Microsoft SQL8",
       "retryOnFail": true,
       "credentials": {
         "microsoftSql": {
-          "id": "OkN54iV2AMtgjIYk",
-          "name": "SQL TH"
+          "id": "UkgZstSJ5Wj9ofPE",
+          "name": "Banco TH"
         }
       }
     },
@@ -903,10 +759,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        5296,
-        2400
+        4272,
+        1136
       ],
-      "id": "0b8d9316-c167-4b1a-a802-d1763443abb8",
+      "id": "3a1d59f5-e3c9-4065-8ff2-6c5a4e22939f",
       "name": "If8"
     },
     {
@@ -917,17 +773,17 @@
       "type": "n8n-nodes-base.microsoftSql",
       "typeVersion": 1.1,
       "position": [
-        5072,
-        3264
+        4048,
+        1728
       ],
-      "id": "58f62a20-341b-4750-af42-382b60e3c6ef",
+      "id": "6bf18ca7-c37d-4fac-a5ee-7412479daa02",
       "name": "Microsoft SQL6",
       "alwaysOutputData": false,
       "retryOnFail": true,
       "credentials": {
         "microsoftSql": {
-          "id": "pDQfRZo44eKZeHAY",
-          "name": "SQL SL"
+          "id": "VCEYzouSnFGOmmxO",
+          "name": "Banco salinas"
         }
       }
     },
@@ -958,10 +814,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        5280,
-        3264
+        4256,
+        1728
       ],
-      "id": "c2fe1631-65d8-4fec-bd4a-21a14ee6a27b",
+      "id": "37d781d8-c7d0-4fab-a1ce-027639e445fa",
       "name": "If7"
     },
     {
@@ -971,10 +827,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5984,
-        1424
+        4960,
+        544
       ],
-      "id": "6b850b04-a824-4fcd-bf87-0456b406ae6a",
+      "id": "68e7b91f-145f-436e-88c9-b426b4f599fa",
       "name": "Código para separar String de int"
     },
     {
@@ -984,10 +840,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6000,
-        3264
+        4976,
+        1728
       ],
-      "id": "3f8e4b58-bf3a-4887-aab1-46417d829c38",
+      "id": "f1eebcf6-76fc-4ff1-bddb-496d89d4ffb5",
       "name": "Código para separar String de int1"
     },
     {
@@ -997,49 +853,49 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6000,
-        2400
+        4976,
+        1136
       ],
-      "id": "ccc5277a-adde-4327-a5aa-a1d60bd2c821",
+      "id": "909ba3d7-f900-4397-9e63-11ab092d7426",
       "name": "Código para separa String de int"
     },
     {
       "parameters": {
-        "jsCode": "const rawOutput = $input.first().json.content.parts[0].text\nconst contas = $('Aggregate2').first().json.data\n\n// ===========================\n// 1 - Extrair JSON do texto\n// ===========================\n\nconst match = rawOutput.match(/\\{[\\s\\S]*?\\}/);\n\nif (!match) {\n  return [{ json: { numero_conta: false } }];\n}\n\nlet parsed;\n\ntry {\n  parsed = JSON.parse(match[0]);\n} catch {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 2 - Verificar ID retornado\n// ===========================\n\nconst idConta = parsed.id_conta;\n\nif (!idConta || idConta === \"false\") {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 3 - Buscar no array\n// ===========================\n\nconst contaEncontrada = contas.find(c => Number(c.ID) === Number(idConta));\n\nif (!contaEncontrada) {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 4 - Retornar número da conta\n// ===========================\n\nreturn [\n  {\n    json: {\n      numero_conta: contaEncontrada[\"Numero Conta\"]\n    }\n  }\n];"
+        "jsCode": "const conta = JSON.parse($input.first().json.content.parts[0].text)\n\nreturn [\n  {\n    json: conta\n  }\n]"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8032,
-        3424
+        6416,
+        1904
       ],
-      "id": "045dd888-4738-4f96-ac4d-f6bcc4147551",
+      "id": "1cbf23e6-3e3b-4a9b-85c4-7c6f33992e44",
       "name": "Cria o output em JSON 3"
     },
     {
       "parameters": {
-        "jsCode": "const rawOutput = $input.first().json.content.parts[0].text\nconst contas = $('Aggregate1').first().json.data\n\n// ===========================\n// 1 - Extrair JSON do texto\n// ===========================\n\nconst match = rawOutput.match(/\\{[\\s\\S]*?\\}/);\n\nif (!match) {\n  return [{ json: { numero_conta: false } }];\n}\n\nlet parsed;\n\ntry {\n  parsed = JSON.parse(match[0]);\n} catch {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 2 - Verificar ID retornado\n// ===========================\n\nconst idConta = parsed.id_conta;\n\nif (!idConta || idConta === \"false\") {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 3 - Buscar no array\n// ===========================\n\nconst contaEncontrada = contas.find(c => Number(c.ID) === Number(idConta));\n\nif (!contaEncontrada) {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 4 - Retornar número da conta\n// ===========================\n\nreturn [\n  {\n    json: {\n      numero_conta: contaEncontrada[\"Numero Conta\"]\n    }\n  }\n];"
+        "jsCode": "const conta = JSON.parse($input.first().json.content.parts[0].text)\n\nreturn [\n  {\n    json: conta\n  }\n]"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8032,
-        2544
+        6432,
+        1296
       ],
-      "id": "2c840360-f1b3-4814-b947-653281f4ba69",
+      "id": "b75c397f-2484-4a67-8e91-7a315164ccc8",
       "name": "Cria o output em JSON 2"
     },
     {
       "parameters": {
-        "jsCode": "const rawOutput = $input.first().json.content.parts[0].text\nconst contas = $('Aggregate').first().json.data\n\n// ===========================\n// 1 - Extrair JSON do texto\n// ===========================\n\nconst match = rawOutput.match(/\\{[\\s\\S]*?\\}/);\n\nif (!match) {\n  return [{ json: { numero_conta: false } }];\n}\n\nlet parsed;\n\ntry {\n  parsed = JSON.parse(match[0]);\n} catch {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 2 - Verificar ID retornado\n// ===========================\n\nconst idConta = parsed.id_conta;\n\nif (!idConta || idConta === \"false\") {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 3 - Buscar no array\n// ===========================\n\nconst contaEncontrada = contas.find(c => Number(c.ID) === Number(idConta));\n\nif (!contaEncontrada) {\n  return [{ json: { numero_conta: false } }];\n}\n\n// ===========================\n// 4 - Retornar número da conta\n// ===========================\n\nreturn [\n  {\n    json: {\n      numero_conta: contaEncontrada[\"Numero Conta\"]\n    }\n  }\n];"
+        "jsCode": "let text = $input.first().json.content.parts[0].text;\n\n// pega só o JSON dentro do texto\nconst match = text.match(/\\{[\\s\\S]*\\}/);\n\nif (!match) {\n  return [{ json: { id_conta: false } }];\n}\n\nconst conta = JSON.parse(match[0]);\n\nreturn [\n  {\n    json: conta\n  }\n];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8032,
-        1584
+        6416,
+        608
       ],
-      "id": "75a39688-35fc-4fde-8ce0-e4fc27ec9aef",
+      "id": "71423d1d-a615-45b3-82f8-a87bc757cd10",
       "name": "Code in JavaScript"
     },
     {
@@ -1062,14 +918,14 @@
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.3,
       "position": [
-        1872,
-        2416
+        848,
+        1152
       ],
-      "id": "f39862fb-76bb-4cd3-b065-d883ec650c35",
+      "id": "b1dd53ea-362d-4c3e-a786-4c8de3ea038e",
       "name": "Gmail Trigger",
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1082,15 +938,15 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        2080,
-        2240
+        1056,
+        976
       ],
-      "id": "4d858f6a-adbe-4c5a-bcd6-7d169f771c73",
+      "id": "683cdab1-7dcf-46d9-b10d-3b3b8804981f",
       "name": "Mark a message as read",
       "webhookId": "032fe5b2-f2ec-44c3-a0c1-3b6ac138642c",
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1103,10 +959,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        2304,
-        2416
+        1280,
+        1152
       ],
-      "id": "ffe0008e-3cf2-46c6-86a4-855a9b828fe2",
+      "id": "5a51dee1-561c-462f-b642-0ae6d05375b2",
       "name": "Extract from File"
     },
     {
@@ -1119,10 +975,10 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1.2,
       "position": [
-        2512,
-        2416
+        1488,
+        1152
       ],
-      "id": "42f78efc-563e-4877-ab81-0ffeaa7711c8",
+      "id": "597abf87-b6d5-40c8-8c56-2406909abbe6",
       "name": "Information Extractor",
       "retryOnFail": true
     },
@@ -1134,16 +990,16 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2496,
-        2624
+        1472,
+        1360
       ],
-      "id": "78840fd5-e2a9-4394-a6d9-0f63c3452967",
+      "id": "9be34b66-e616-4052-a8d0-62367536d837",
       "name": "Google Gemini Chat Model4",
       "retryOnFail": true,
       "credentials": {
         "googlePalmApi": {
-          "id": "MDybPyeFzlSCGMVU",
-          "name": "Gemini api pro"
+          "id": "PWue6OTmm868MBhI",
+          "name": "Google Gemini(PaLM) Api account"
         }
       }
     },
@@ -1174,10 +1030,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        4000,
-        2432
+        2976,
+        1168
       ],
-      "id": "1e0d5a4e-f0bf-4e95-871d-61153c241ff4",
+      "id": "dc6e1223-0516-470a-b05f-be9b7cbc6773",
       "name": "If"
     },
     {
@@ -1189,11 +1045,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4192,
-        2576
+        3168,
+        1312
       ],
       "typeVersion": 1,
-      "id": "6465bf4c-43ca-4732-94ef-ce351db66f1f",
+      "id": "adf52ae5-4a22-41d8-a396-4730a195adc6",
       "name": "Sticky Note4"
     },
     {
@@ -1205,10 +1061,10 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        2848,
-        2416
+        1824,
+        1152
       ],
-      "id": "e0f7187b-b5a6-45f7-ad17-6d168b117ef2",
+      "id": "f2ce216a-920d-4684-a64b-0a1264264942",
       "name": "Split Out"
     },
     {
@@ -1218,10 +1074,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        3328,
-        2416
+        2304,
+        1152
       ],
-      "id": "ed7911f7-0ab6-41b8-a7bf-67458839feac",
+      "id": "f10a80a1-8baa-43df-bc1f-1d9f07b1fcb0",
       "name": "Loop Over Items"
     },
     {
@@ -1234,16 +1090,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4464,
-        1968
+        3440,
+        704
       ],
-      "id": "0603c4f2-d35b-46e5-87bd-516c840067fb",
+      "id": "53dcce68-8751-4409-b3f3-99a73c6c82b8",
       "name": "Reply to a message1",
       "webhookId": "76896a78-2e21-4f5f-ae89-9c76a0420b5b",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1256,10 +1112,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        3680,
-        2112
+        2656,
+        848
       ],
-      "id": "33b645f5-f3f7-4fe5-97c0-c52b15f179a0",
+      "id": "88446add-2925-420b-9b5e-3258d9feb131",
       "name": "Aggregate3"
     },
     {
@@ -1271,25 +1127,25 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        5008,
-        3616
+        3984,
+        2240
       ],
-      "id": "5aac1769-f914-43fe-aac6-5b3aabb1a3a9",
+      "id": "6a9c86f7-207f-4707-88c3-0a0dc40f7907",
       "name": "Sticky Note3"
     },
     {
       "parameters": {
         "content": "## Verifica se o NCM esta no banco",
-        "height": 2192,
+        "height": 1584,
         "color": 2
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        5008,
-        1248
+        3984,
+        336
       ],
-      "id": "3c7de529-8aaf-48a5-917e-3b5605224b69",
+      "id": "f57117ed-731f-4fdb-9319-95262de7eb70",
       "name": "Sticky Note5"
     },
     {
@@ -1302,10 +1158,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2272,
-        2288
+        1248,
+        1024
       ],
-      "id": "3b8f8a38-1f38-46e4-948f-2ccec60654e6",
+      "id": "2626df58-62c4-4e29-a84e-67b199294144",
       "name": "Sticky Note11"
     },
     {
@@ -1318,26 +1174,26 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2480,
-        2256
+        1456,
+        992
       ],
-      "id": "430000c5-89c9-477a-ae03-11342fecdb51",
+      "id": "a10904eb-7498-4526-a25a-fb83643046b0",
       "name": "Sticky Note12"
     },
     {
       "parameters": {
         "content": "## Automação cadastro de itens ",
-        "height": 3216,
-        "width": 7152,
+        "height": 2672,
+        "width": 6944,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1760,
-        832
+        736,
+        -64
       ],
-      "id": "4e7d325f-d49b-4f9e-8334-d5a559840ab7",
+      "id": "c3877638-c6e5-4ec0-8cb2-5d4c4f750a7b",
       "name": "Sticky Note8"
     },
     {
@@ -1350,15 +1206,15 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        2080,
-        2640
+        1056,
+        1376
       ],
-      "id": "4232ef3a-8a0a-4de4-8253-9d850ae99b6f",
+      "id": "39197838-ea0d-4ab0-b008-789ab67bfbc0",
       "name": "Reply to a message",
       "webhookId": "2bc31233-fada-432a-b6ef-c6908e2ffdd0",
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1373,16 +1229,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4272,
-        2752
+        3248,
+        1488
       ],
-      "id": "0af73d3c-ef9b-4af5-994e-f47f742ead96",
+      "id": "ad77d838-7983-4ddf-a482-5a223c776f2f",
       "name": "Reply to a message2",
       "webhookId": "3eac3d97-a0a1-4b9c-8e72-cf0fc1439094",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1397,16 +1253,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        5072,
-        3744
+        4048,
+        2368
       ],
-      "id": "cdc9a30a-62b3-4963-be4f-7a0a1730642c",
+      "id": "4a09b2bb-720d-4b82-83b4-52151560b9dd",
       "name": "Reply to a message3",
       "webhookId": "66237d11-1b98-45c9-bb19-1214cc863412",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1421,16 +1277,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        7792,
-        1152
+        6192,
+        272
       ],
-      "id": "f8cc84a6-b6f5-42f9-8807-fc089ee51032",
+      "id": "58f52d53-0b1c-48fa-8a99-37e2597a5690",
       "name": "Reply to a message4",
       "webhookId": "706be682-e606-4889-a263-b32700dab2dc",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1445,16 +1301,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        5568,
-        1152
+        4544,
+        272
       ],
-      "id": "a27c6d64-9695-4c19-a86f-183106187bd7",
+      "id": "867e9133-4d2b-4b5c-9229-ac509874c500",
       "name": "Send a message",
       "webhookId": "1508721f-5722-45c2-abf3-3f9b5e8e4d6f",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1469,16 +1325,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        8608,
-        1776
+        7440,
+        896
       ],
-      "id": "7162b00e-70af-4ad7-a0d7-8bf55d060b2e",
+      "id": "74a26674-108b-4e70-abc1-07dbada5d595",
       "name": "Send a message1",
       "webhookId": "7a4f73f5-dfc0-4036-bfeb-84b1e3da556e",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1493,16 +1349,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        8608,
-        2736
+        7440,
+        1472
       ],
-      "id": "21f635ba-13f6-43e8-bd6d-bbaf58e7c5f9",
+      "id": "014905ef-86ca-46c1-8fcb-6acd7ec7c478",
       "name": "Send a message2",
       "webhookId": "7a4f73f5-dfc0-4036-bfeb-84b1e3da556e",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1517,16 +1373,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        8592,
-        3616
+        7424,
+        2080
       ],
-      "id": "4f8cd8ff-0e5d-47d0-8208-37f98ad91fed",
+      "id": "1a3b2499-8dcd-40a9-a594-9738eae3b811",
       "name": "Send a message3",
       "webhookId": "7a4f73f5-dfc0-4036-bfeb-84b1e3da556e",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1541,16 +1397,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        7792,
-        2192
+        6192,
+        928
       ],
-      "id": "569daed5-4d8f-4600-8be8-8a3d31151205",
+      "id": "db45cbe1-2f9b-425d-9dbe-aee8fae67318",
       "name": "Reply to a message5",
       "webhookId": "706be682-e606-4889-a263-b32700dab2dc",
       "alwaysOutputData": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1565,16 +1421,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        7792,
-        3040
+        6192,
+        1504
       ],
-      "id": "3a027317-ddd2-4eda-951c-6d010b6e8f0e",
+      "id": "c86750fc-0b7f-4055-a79d-3fdc1952fa32",
       "name": "Reply to a message6",
       "webhookId": "706be682-e606-4889-a263-b32700dab2dc",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1589,16 +1445,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        5520,
-        2192
+        4496,
+        928
       ],
-      "id": "5ed91ac4-62cd-4ba8-a988-24c94468d9f2",
+      "id": "9656c879-163b-4162-aacb-a61b7d5bf249",
       "name": "Send a message4",
       "webhookId": "1508721f-5722-45c2-abf3-3f9b5e8e4d6f",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1613,16 +1469,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        5536,
-        3040
+        4512,
+        1504
       ],
-      "id": "a2de6376-b4a7-4f45-9615-cd735f37d061",
+      "id": "91abd682-9669-4676-ba6c-916d89f1ea72",
       "name": "Send a message5",
       "webhookId": "1508721f-5722-45c2-abf3-3f9b5e8e4d6f",
       "retryOnFail": true,
       "credentials": {
         "gmailOAuth2": {
-          "id": "te8Ze3Cr0yJGQtzs",
+          "id": "zAJHLyiZJO2Vm6S2",
           "name": "Gmail account"
         }
       }
@@ -1644,10 +1500,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        6224,
-        1424
+        5200,
+        544
       ],
-      "id": "db8f8508-1a54-4220-a999-f48022d20c71",
+      "id": "026aa86b-c5c6-4242-b280-87d55476b299",
       "name": "Edit Fields 4"
     },
     {
@@ -1697,10 +1553,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3088,
-        2416
+        2064,
+        1152
       ],
-      "id": "7ac5ced5-4ac6-4bf7-9b11-2379bdb951d3",
+      "id": "c94c0050-7f1a-4f82-b1f2-938222c301a5",
       "name": "Edit Fields 2"
     },
     {
@@ -1738,10 +1594,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2080,
-        2416
+        1056,
+        1152
       ],
-      "id": "47c62d53-2787-4cd5-8cd0-1694a497f363",
+      "id": "9e127e33-339b-4bcf-84f0-3558244c99d3",
       "name": "Edit Fields 1",
       "onError": "continueErrorOutput"
     },
@@ -1762,10 +1618,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        6224,
-        2400
+        5200,
+        1136
       ],
-      "id": "f14933b2-b049-442d-9a29-86a562ea4bad",
+      "id": "cfb5a394-5c27-4e08-a61e-c68f8a131572",
       "name": "Edit Fields 5"
     },
     {
@@ -1785,10 +1641,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        6256,
-        3264
+        5232,
+        1728
       ],
-      "id": "23730211-1dae-4793-9e1e-0481cac9bc81",
+      "id": "0db99f7d-00f7-41d1-b102-d9b58091563e",
       "name": "Edit Fields 6"
     },
     {
@@ -1806,10 +1662,10 @@
       "type": "n8n-nodes-base.microsoftOutlookTrigger",
       "typeVersion": 1,
       "position": [
-        1632,
-        2448
+        608,
+        1184
       ],
-      "id": "e60cbae4-19ae-4afa-a35b-22a816baa927",
+      "id": "a28ce5ba-0440-4322-b879-242cae1b7de0",
       "name": "Microsoft Outlook Trigger",
       "disabled": true
     },
@@ -1824,29 +1680,28 @@
         "messages": {
           "values": [
             {
-              "content": "=Descrição do item:\n{{ $('Loop Over Items').item.json['Nome do item'] }}\n\nSetor do solicitante: \n{{ $('Edit Fields 1').item.json.Setor }}\n\nContas disponíveis:\n{{ JSON.stringify($json.data) }}\n\nEscolha o id_conta correto.\nRetorne somente o JSON no formato especificado."
+              "content": "=Descrição do item:\n{{ $('Loop Over Items').item.json['Nome do item'] }}\n\nSetor do solicitante:\n{{ $('Edit Fields 1').item.json.Setor }}\n\nConsidere que a lista de contas será obtida automaticamente pela tool.\n\nEscolha o número da conta (id_conta) correto com base na descrição e no setor.\n\nRetorne somente o JSON no formato especificado."
             }
           ]
         },
-        "jsonOutput": true,
         "builtInTools": {},
         "options": {
-          "systemMessage": "Você é um classificador automático de contas contábeis.\n\nVocê SEMPRE receberá:\n- a descrição do item\n- o setor do solicitante\n- uma lista de contas disponíveis com seus respectivos IDs e descrições\n\nO setor do solicitante deve ser utilizado como contexto principal para entender a finalidade do item.\nA descrição do item serve como complemento para confirmar o enquadramento.\n\nREGRAS ABSOLUTAS:\n- Sua resposta DEVE conter APENAS JSON válido\n- NÃO escreva texto, explicações ou markdown\n- NÃO use blocos ```\n- NÃO use frases antes ou depois do JSON\n- NÃO explique o motivo\n- Escolha APENAS entre os IDs fornecidos\n- NÃO invente, modifique ou crie novos IDs\n- Se não houver correspondência clara entre o item (considerando descrição + setor) e as contas fornecidas, retorne {\"id_conta\":false}\n- Se o setor estiver vazio ou genérico demais para decisão segura, retorne {\"id_conta\":false}\n- Se qualquer texto for incluído fora do JSON, a resposta será considerada inválida.\n\nCRITÉRIO DE DECISÃO:\n- Priorize contas normalmente utilizadas pelo setor informado\n- NÃO infira uso diferente do setor informado\n- Contas de feiras, eventos ou exposições só podem ser escolhidas se o setor informado for Marketing/Eventos OU se a descrição mencionar explicitamente evento, feira ou exposição\n- Estruturas físicas, móveis, cubos, displays ou mobiliários sem indicação explícita de evento NÃO devem ser classificados como despesas de eventos\n- Se mais de uma conta parecer possível, escolha a mais comum para o setor informado\n- Se a decisão não for clara, retorne {\"id_conta\":false}\n\nFORMATO ÚNICO PERMITIDO:\n{\"id_conta\":\"NUMERO\"}\nou\n{\"id_conta\":false}"
+          "systemMessage": "Você é um classificador automático de contas contábeis.\n\nVocê SEMPRE deverá:\n\nConsultar a tool get rows do Google Sheets para obter a lista de contas disponíveis (colunas: número da conta e descrição)\nUtilizar essas contas como única base válida para decisão\n\nVocê receberá como entrada:\n\na descrição do item\no setor do solicitante\n\nO setor do solicitante deve ser utilizado como contexto principal para entender a finalidade do item.\nA descrição do item serve como complemento para confirmar o enquadramento.\n\nREGRAS ABSOLUTAS:\n\nSua resposta DEVE conter APENAS JSON válido\nNÃO escreva texto, explicações ou markdown\nNÃO use blocos ```\nNÃO use frases antes ou depois do JSON\nNÃO explique o motivo\nRetorne APENAS o número da conta exatamente como está na planilha\nEscolha APENAS entre os números de contas retornados pela tool get rows\nNÃO invente, modifique ou crie novos números de conta\nSe não houver correspondência clara entre o item (considerando descrição + setor) e as contas retornadas, retorne {\"id_conta\":false}\nSe o setor estiver vazio ou genérico demais para decisão segura, retorne {\"id_conta\":false}\nSe qualquer texto for incluído fora do JSON, a resposta será considerada inválida\n\nCRITÉRIO DE DECISÃO:\n\nPriorize contas normalmente utilizadas pelo setor informado\nNÃO infira uso diferente do setor informado\nContas de feiras, eventos ou exposições só podem ser escolhidas se o setor informado for Marketing/Eventos OU se a descrição mencionar explicitamente evento, feira ou exposição\nEstruturas físicas, móveis, cubos, displays ou mobiliários sem indicação explícita de evento NÃO devem ser classificados como despesas de eventos\nUse a descrição da conta da planilha para encontrar a melhor correspondência com o item\nSe mais de uma conta parecer possível, escolha a mais comum para o setor informado\nSe a decisão não for clara, retorne {\"id_conta\":false}\n\nFLUXO OBRIGATÓRIO:\n\nConsultar a tool get rows do Google Sheets\nLer número da conta + descrição\nAnalisar setor + descrição do item\nRetornar o número da conta correspondente\n\nFORMATO ÚNICO PERMITIDO:\n{\"id_conta\":\"NUMERO_DA_CONTA\"}\nou\n{\"id_conta\":false}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
       "position": [
-        7040,
-        1424
+        5440,
+        544
       ],
-      "id": "787fdc11-a1b5-4d97-89a7-26771497ff78",
+      "id": "348c1535-7e6b-4162-92fa-777445e1e30b",
       "name": "Classificador conta IB",
       "retryOnFail": true,
       "credentials": {
         "googlePalmApi": {
-          "id": "MDybPyeFzlSCGMVU",
-          "name": "Gemini api pro"
+          "id": "PWue6OTmm868MBhI",
+          "name": "Google Gemini(PaLM) Api account"
         }
       }
     },
@@ -1861,29 +1716,28 @@
         "messages": {
           "values": [
             {
-              "content": "=Descrição do item:\n{{ $('Loop Over Items').item.json['Nome do item'] }}\n\nSetor do solicitante: \n{{ $('Edit Fields 1').item.json.Setor }}\n\nContas disponíveis:\n{{ JSON.stringify($json.data) }}\n\nEscolha o id_conta correto.\nRetorne somente o JSON no formato especificado."
+              "content": "=Descrição do item:\n{{ $('Loop Over Items').item.json['Nome do item'] }}\n\nSetor do solicitante:\n{{ $('Edit Fields 1').item.json.Setor }}\n\nConsidere que a lista de contas será obtida automaticamente pela tool.\n\nEscolha o número da conta (id_conta) correto com base na descrição e no setor.\n\nRetorne somente o JSON no formato especificado."
             }
           ]
         },
-        "jsonOutput": true,
         "builtInTools": {},
         "options": {
-          "systemMessage": "Você é um classificador automático de contas contábeis.\n\nVocê SEMPRE receberá:\n- a descrição do item\n- o setor do solicitante\n- uma lista de contas disponíveis com seus respectivos IDs e descrições\n\nO setor do solicitante deve ser utilizado como contexto principal para entender a finalidade do item.\nA descrição do item serve como complemento para confirmar o enquadramento.\n\nREGRAS ABSOLUTAS:\n- Sua resposta DEVE conter APENAS JSON válido\n- NÃO escreva texto, explicações ou markdown\n- NÃO use blocos ```\n- NÃO use frases antes ou depois do JSON\n- NÃO explique o motivo\n- Escolha APENAS entre os IDs fornecidos\n- NÃO invente, modifique ou crie novos IDs\n- Se não houver correspondência clara entre o item (considerando descrição + setor) e as contas fornecidas, retorne {\"id_conta\":false}\n- Se o setor estiver vazio ou genérico demais para decisão segura, retorne {\"id_conta\":false}\n- Se qualquer texto for incluído fora do JSON, a resposta será considerada inválida.\n\nCRITÉRIO DE DECISÃO:\n- Priorize contas normalmente utilizadas pelo setor informado\n- NÃO infira uso diferente do setor informado\n- Contas de feiras, eventos ou exposições só podem ser escolhidas se o setor informado for Marketing/Eventos OU se a descrição mencionar explicitamente evento, feira ou exposição\n- Estruturas físicas, móveis, cubos, displays ou mobiliários sem indicação explícita de evento NÃO devem ser classificados como despesas de eventos\n- Se mais de uma conta parecer possível, escolha a mais comum para o setor informado\n- Se a decisão não for clara, retorne {\"id_conta\":false}\n\nFORMATO ÚNICO PERMITIDO:\n{\"id_conta\":\"NUMERO\"}\nou\n{\"id_conta\":false}"
+          "systemMessage": "Você é um classificador automático de contas contábeis.\n\nVocê SEMPRE deverá:\n\nConsultar a tool get rows do Google Sheets para obter a lista de contas disponíveis (colunas: número da conta e descrição)\nUtilizar essas contas como única base válida para decisão\n\nVocê receberá como entrada:\n\na descrição do item\no setor do solicitante\n\nO setor do solicitante deve ser utilizado como contexto principal para entender a finalidade do item.\nA descrição do item serve como complemento para confirmar o enquadramento.\n\nREGRAS ABSOLUTAS:\n\nSua resposta DEVE conter APENAS JSON válido\nNÃO escreva texto, explicações ou markdown\nNÃO use blocos ```\nNÃO use frases antes ou depois do JSON\nNÃO explique o motivo\nRetorne APENAS o número da conta exatamente como está na planilha\nEscolha APENAS entre os números de contas retornados pela tool get rows\nNÃO invente, modifique ou crie novos números de conta\nSe não houver correspondência clara entre o item (considerando descrição + setor) e as contas retornadas, retorne {\"id_conta\":false}\nSe o setor estiver vazio ou genérico demais para decisão segura, retorne {\"id_conta\":false}\nSe qualquer texto for incluído fora do JSON, a resposta será considerada inválida\n\nCRITÉRIO DE DECISÃO:\n\nPriorize contas normalmente utilizadas pelo setor informado\nNÃO infira uso diferente do setor informado\nContas de feiras, eventos ou exposições só podem ser escolhidas se o setor informado for Marketing/Eventos OU se a descrição mencionar explicitamente evento, feira ou exposição\nEstruturas físicas, móveis, cubos, displays ou mobiliários sem indicação explícita de evento NÃO devem ser classificados como despesas de eventos\nUse a descrição da conta da planilha para encontrar a melhor correspondência com o item\nSe mais de uma conta parecer possível, escolha a mais comum para o setor informado\nSe a decisão não for clara, retorne {\"id_conta\":false}\n\nFLUXO OBRIGATÓRIO:\n\nConsultar a tool get rows do Google Sheets\nLer número da conta + descrição\nAnalisar setor + descrição do item\nRetornar o número da conta correspondente\n\nFORMATO ÚNICO PERMITIDO:\n{\"id_conta\":\"NUMERO_DA_CONTA\"}\nou\n{\"id_conta\":false}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
       "position": [
-        7040,
-        2400
+        5440,
+        1136
       ],
-      "id": "e4d18018-173e-48bf-97d4-d63f8c4791e5",
+      "id": "8918b067-fcd5-463e-b27e-3350fa7544f1",
       "name": "Classificador conta TH",
       "retryOnFail": true,
       "credentials": {
         "googlePalmApi": {
-          "id": "MDybPyeFzlSCGMVU",
-          "name": "Gemini api pro"
+          "id": "PWue6OTmm868MBhI",
+          "name": "Google Gemini(PaLM) Api account"
         }
       }
     },
@@ -1898,28 +1752,28 @@
         "messages": {
           "values": [
             {
-              "content": "=Descrição do item:\n{{ $('Loop Over Items').item.json['Nome do item'] }}\n\nSetor do solicitante: \n{{ $('Edit Fields 1').item.json.Setor }}\n\nContas disponíveis:\n{{ JSON.stringify($json.data) }}\n\nEscolha o id_conta correto.\nRetorne somente o JSON no formato especificado."
+              "content": "=Descrição do item:\n{{ $('Loop Over Items').item.json['Nome do item'] }}\n\nSetor do solicitante:\n{{ $('Edit Fields 1').item.json.Setor }}\n\nConsidere que a lista de contas será obtida automaticamente pela tool.\n\nEscolha o número da conta (id_conta) correto com base na descrição e no setor.\n\nRetorne somente o JSON no formato especificado."
             }
           ]
         },
         "builtInTools": {},
         "options": {
-          "systemMessage": "Você é um classificador automático de contas contábeis.\n\nVocê SEMPRE receberá:\n- a descrição do item\n- o setor do solicitante\n- uma lista de contas disponíveis com seus respectivos IDs e descrições\n\nO setor do solicitante deve ser utilizado como contexto principal para entender a finalidade do item.\nA descrição do item serve como complemento para confirmar o enquadramento.\n\nREGRAS ABSOLUTAS:\n- Sua resposta DEVE conter APENAS JSON válido\n- NÃO escreva texto, explicações ou markdown\n- NÃO use blocos ```\n- NÃO use frases antes ou depois do JSON\n- NÃO explique o motivo\n- Escolha APENAS entre os IDs fornecidos\n- NÃO invente, modifique ou crie novos IDs\n- Se não houver correspondência clara entre o item (considerando descrição + setor) e as contas fornecidas, retorne {\"id_conta\":false}\n- Se o setor estiver vazio ou genérico demais para decisão segura, retorne {\"id_conta\":false}\n- Se qualquer texto for incluído fora do JSON, a resposta será considerada inválida.\n\nCRITÉRIO DE DECISÃO:\n- Priorize contas normalmente utilizadas pelo setor informado\n- NÃO infira uso diferente do setor informado\n- Contas de feiras, eventos ou exposições só podem ser escolhidas se o setor informado for Marketing/Eventos OU se a descrição mencionar explicitamente evento, feira ou exposição\n- Estruturas físicas, móveis, cubos, displays ou mobiliários sem indicação explícita de evento NÃO devem ser classificados como despesas de eventos\n- Se mais de uma conta parecer possível, escolha a mais comum para o setor informado\n- Se a decisão não for clara, retorne {\"id_conta\":false}\n\nFORMATO ÚNICO PERMITIDO:\n{\"id_conta\":\"NUMERO\"}\nou\n{\"id_conta\":false}"
+          "systemMessage": "Você é um classificador automático de contas contábeis.\n\nVocê SEMPRE deverá:\n\nConsultar a tool get rows do Google Sheets para obter a lista de contas disponíveis (colunas: número da conta e descrição)\nUtilizar essas contas como única base válida para decisão\n\nVocê receberá como entrada:\n\na descrição do item\no setor do solicitante\n\nO setor do solicitante deve ser utilizado como contexto principal para entender a finalidade do item.\nA descrição do item serve como complemento para confirmar o enquadramento.\n\nREGRAS ABSOLUTAS:\n\nSua resposta DEVE conter APENAS JSON válido\nNÃO escreva texto, explicações ou markdown\nNÃO use blocos ```\nNÃO use frases antes ou depois do JSON\nNÃO explique o motivo\nRetorne APENAS o número da conta exatamente como está na planilha\nEscolha APENAS entre os números de contas retornados pela tool get rows\nNÃO invente, modifique ou crie novos números de conta\nSe não houver correspondência clara entre o item (considerando descrição + setor) e as contas retornadas, retorne {\"id_conta\":false}\nSe o setor estiver vazio ou genérico demais para decisão segura, retorne {\"id_conta\":false}\nSe qualquer texto for incluído fora do JSON, a resposta será considerada inválida\n\nCRITÉRIO DE DECISÃO:\n\nPriorize contas normalmente utilizadas pelo setor informado\nNÃO infira uso diferente do setor informado\nContas de feiras, eventos ou exposições só podem ser escolhidas se o setor informado for Marketing/Eventos OU se a descrição mencionar explicitamente evento, feira ou exposição\nEstruturas físicas, móveis, cubos, displays ou mobiliários sem indicação explícita de evento NÃO devem ser classificados como despesas de eventos\nUse a descrição da conta da planilha para encontrar a melhor correspondência com o item\nSe mais de uma conta parecer possível, escolha a mais comum para o setor informado\nSe a decisão não for clara, retorne {\"id_conta\":false}\n\nFLUXO OBRIGATÓRIO:\n\nConsultar a tool get rows do Google Sheets\nLer número da conta + descrição\nAnalisar setor + descrição do item\nRetornar o número da conta correspondente\n\nFORMATO ÚNICO PERMITIDO:\n{\"id_conta\":\"NUMERO_DA_CONTA\"}\nou\n{\"id_conta\":false}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
       "position": [
-        7040,
-        3264
+        5440,
+        1728
       ],
-      "id": "0c1fb795-9f4d-4d75-bb46-a80f0623b352",
+      "id": "570d8525-432b-43a0-95c8-2b4f76338ba6",
       "name": "Classificador conta SL",
       "retryOnFail": true,
       "credentials": {
         "googlePalmApi": {
-          "id": "MDybPyeFzlSCGMVU",
-          "name": "Gemini api pro"
+          "id": "PWue6OTmm868MBhI",
+          "name": "Google Gemini(PaLM) Api account"
         }
       }
     },
@@ -1951,10 +1805,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        4144,
-        2112
+        3120,
+        848
       ],
-      "id": "b6e5526d-23ec-4415-bb7d-655f56e50ffd",
+      "id": "7b1923b8-c679-4f49-aecc-5922fdb1fb61",
       "name": "If1"
     },
     {
@@ -1980,16 +1834,16 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
       "position": [
-        3616,
-        2432
+        2592,
+        1168
       ],
-      "id": "ead0766b-c2c8-4165-83ba-bece5f8493ac",
+      "id": "e5780da7-3dad-4d30-8b4c-8da0a3dde009",
       "name": "Validar NCM",
       "retryOnFail": true,
       "credentials": {
         "googlePalmApi": {
-          "id": "MDybPyeFzlSCGMVU",
-          "name": "Gemini api pro"
+          "id": "PWue6OTmm868MBhI",
+          "name": "Google Gemini(PaLM) Api account"
         }
       }
     },
@@ -2000,11 +1854,269 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3936,
-        2112
+        2912,
+        848
       ],
-      "id": "c18063db-0027-46cb-90e9-e2405ed5437b",
+      "id": "51c2b611-0fa1-45c3-8ff5-1151fdc72fd7",
       "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI",
+          "mode": "list",
+          "cachedResultName": "Contas contabeis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 338709825,
+          "mode": "list",
+          "cachedResultName": "Conta IB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit#gid=338709825"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        5632,
+        736
+      ],
+      "id": "3d4cc2c4-2278-4455-bfcc-4cc11d7b2fac",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select count(*) Existe\nfrom cadastro_item_fiscal\nwhere item_descricao = '{{ $('Loop Over Items').item.json['Nome do item'] }}'\n\tand unidade = 'UN'\n  \tand TRIBUT_ORIGEM = '{{ $('Loop Over Items').item.json['CST'] }}'\n\tand CLASSIF_FISCAL = '{{ $('Loop Over Items').item.json['NCM'] }}'\n\tand CONTA_CONTABIL = '{{ $json.id_conta }}'\n\tand INDICADOR_CFOP = '13'\n\tand item_fiscal_grupo = '2'\n\tand TIPO_ITEM_SPED = '07'\n\tand IDENT_UTILIZACAO_IMOB = '9'\n\tand INATIVO = 0"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        6672,
+        1296
+      ],
+      "id": "e5369624-028f-4b0c-ba84-ff145854773c",
+      "name": "Microsoft SQL5",
+      "credentials": {
+        "microsoftSql": {
+          "id": "UkgZstSJ5Wj9ofPE",
+          "name": "Banco TH"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select count(*) Existe\nfrom cadastro_item_fiscal\nwhere item_descricao = '{{ $('Loop Over Items').item.json['Nome do item'] }}'\n\tand unidade = 'UN'\n\tand TRIBUT_ORIGEM = '{{ $('Loop Over Items').item.json.CST }}'\n\tand CLASSIF_FISCAL = '{{ $('Loop Over Items').item.json.NCM }}'\n\tand CONTA_CONTABIL = '{{ $json.id_conta }}'\n\tand INDICADOR_CFOP = '13'\n\tand item_fiscal_grupo = '02'\n\tand TIPO_ITEM_SPED = '07'\n\tand IDENT_UTILIZACAO_IMOB = '9'\n\tand INATIVO = 0\n"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        6624,
+        608
+      ],
+      "id": "952fa74d-0e8f-44e2-ae68-3762276bb4d6",
+      "name": "Microsoft SQL7",
+      "credentials": {
+        "microsoftSql": {
+          "id": "KtBQ1uO6JMALaFpK",
+          "name": "Banco IB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bd0e539b-f7db-4cb7-8099-05516b131f86",
+              "leftValue": "={{ $json.Existe }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        6832,
+        608
+      ],
+      "id": "20c5489e-abf0-49e2-934b-233c018bdbb4",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI",
+          "mode": "list",
+          "cachedResultName": "Contas contabeis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": " Conta TH",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        5616,
+        1344
+      ],
+      "id": "b0082f3d-ab2f-4cbc-85bf-0254876db275",
+      "name": "Get row(s) in sheet in Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ba1f1b68-250b-4ce9-881a-4add01b5546b",
+              "leftValue": "={{ $json.Existe }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        6880,
+        1296
+      ],
+      "id": "14b67747-716e-43d3-bdbd-9bc522ece54f",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select count(*) Existe\nfrom cadastro_item_fiscal\n  where item_descricao = '{{ $('Loop Over Items').item.json['Nome do item'] }}'\n\tand unidade = 'UN'\n\tand TRIBUT_ORIGEM = '{{ $('Loop Over Items').item.json['CST'] }}'\n  \tand CLASSIF_FISCAL = '{{ $('Loop Over Items').item.json['NCM'] }}'\n\tand CONTA_CONTABIL = '{{ $json.id_conta }}'\n\tand INDICADOR_CFOP = '13'\n\tand item_fiscal_grupo = '03'\n\tand TIPO_ITEM_SPED = '07'\n\tand IDENT_UTILIZACAO_IMOB = '9'\n\tand INATIVO = 0"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        6656,
+        1904
+      ],
+      "id": "89def850-09a4-4c24-9004-0d8dfdf8c7a5",
+      "name": "Microsoft SQL1",
+      "credentials": {
+        "microsoftSql": {
+          "id": "UkgZstSJ5Wj9ofPE",
+          "name": "Banco TH"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "23930cf9-a2dc-4b47-ba3a-a6a31d053495",
+              "leftValue": "={{ $json.Existe }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        6864,
+        1904
+      ],
+      "id": "51138f55-9674-42da-9871-9e12a6b2df88",
+      "name": "If10"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI",
+          "mode": "list",
+          "cachedResultName": "Contas contabeis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 461745371,
+          "mode": "list",
+          "cachedResultName": "Conta SL",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yzkeSegmLnEDCIBW5miREIBPkx3dBC8zqFUzaTnRaGI/edit#gid=461745371"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        5536,
+        1936
+      ],
+      "id": "40edc661-0953-421f-a9e8-dac54df078fb",
+      "name": "Get row(s) in sheet in Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pYNJtsCw8pOpm1uG",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -2021,17 +2133,6 @@
         [
           {
             "node": "Send a message1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Aggregate": {
-      "main": [
-        [
-          {
-            "node": "Classificador conta IB",
             "type": "main",
             "index": 0
           }
@@ -2092,17 +2193,6 @@
         ]
       ]
     },
-    "Aggregate1": {
-      "main": [
-        [
-          {
-            "node": "Classificador conta TH",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Microsoft SQL3": {
       "main": [
         [
@@ -2139,17 +2229,6 @@
         ]
       ]
     },
-    "Aggregate2": {
-      "main": [
-        [
-          {
-            "node": "Classificador conta SL",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Planilha de códigos de itens salinas": {
       "main": [
         [
@@ -2177,39 +2256,6 @@
         [
           {
             "node": "Código para separar String de int",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Contas contábeis IB": {
-      "main": [
-        [
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Contas contábeis TH": {
-      "main": [
-        [
-          {
-            "node": "Aggregate1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Contas contábeis SL": {
-      "main": [
-        [
-          {
-            "node": "Aggregate2",
             "type": "main",
             "index": 0
           }
@@ -2405,7 +2451,7 @@
       "main": [
         [
           {
-            "node": "Microsoft SQL3",
+            "node": "Microsoft SQL1",
             "type": "main",
             "index": 0
           }
@@ -2416,7 +2462,7 @@
       "main": [
         [
           {
-            "node": "Microsoft SQL2",
+            "node": "Microsoft SQL5",
             "type": "main",
             "index": 0
           }
@@ -2427,7 +2473,7 @@
       "main": [
         [
           {
-            "node": "Microsoft SQL",
+            "node": "Microsoft SQL7",
             "type": "main",
             "index": 0
           }
@@ -2556,7 +2602,7 @@
       "main": [
         [
           {
-            "node": "Contas contábeis IB",
+            "node": "Classificador conta IB",
             "type": "main",
             "index": 0
           }
@@ -2596,7 +2642,7 @@
       "main": [
         [
           {
-            "node": "Contas contábeis TH",
+            "node": "Classificador conta TH",
             "type": "main",
             "index": 0
           }
@@ -2607,16 +2653,11 @@
       "main": [
         [
           {
-            "node": "Contas contábeis SL",
+            "node": "Classificador conta SL",
             "type": "main",
             "index": 0
           }
         ]
-      ]
-    },
-    "Mark a message as read": {
-      "main": [
-        []
       ]
     },
     "Classificador conta IB": {
@@ -2750,6 +2791,126 @@
           }
         ]
       ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "Classificador conta IB",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft SQL5": {
+      "main": [
+        [
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft SQL7": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Microsoft SQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Classificador conta TH",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Microsoft SQL2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft SQL1": {
+      "main": [
+        [
+          {
+            "node": "If10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If10": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Microsoft SQL3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Classificador conta SL",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -2757,17 +2918,16 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "32f1388d-bdde-4cb7-87cd-91b133d3c4bb",
+  "versionId": "dae9418b-11fc-43f0-b99e-0b2dee841f4a",
   "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "c9ac0336281178410ae1caf9c0c4bc6510509f0f05a469f30c634bd9ecc77f35"
+    "instanceId": "2efdf59d22b01f5b3cc02c6e5343efb0018294d35df8715600aeda534f49f95d"
   },
-  "id": "yr23QBaxXpVDy6cS3mFRo",
+  "id": "vMnEtXEqtqqBiEjybJ-fM",
   "tags": [
     {
-      "updatedAt": "2026-02-10T01:45:31.626Z",
-      "createdAt": "2026-02-10T01:45:31.626Z",
-      "id": "YilRmVmeVnaYqnNc",
+      "updatedAt": "2026-03-19T02:29:18.630Z",
+      "createdAt": "2026-03-19T02:29:18.630Z",
+      "id": "1zrEOvHGlIcqbdFY",
       "name": "Cadastro de itens"
     }
   ]
