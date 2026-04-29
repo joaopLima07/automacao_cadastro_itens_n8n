@@ -176,7 +176,7 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2640,
+        2608,
         640
       ],
       "typeVersion": 1,
@@ -1261,7 +1261,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json.data;\n\nconst temCodigoPreenchido = data.some(\n  item => item['Codigo do item'] !== '' && item['Codigo do item'] !== null && item['Codigo do item'] !== undefined\n);\n\nreturn [{\n  json: {\n    temCodigo: temCodigoPreenchido\n  }\n}];"
+        "jsCode": "const data = $input.first().json.data;\n\nconst campos = ['codigo_IB', 'codigo_TH', 'codigo_salinas'];\n\nconst temCodigoPreenchido = data.some(item =>\n  campos.some(campo => {\n    const val = item[campo];\n    return val !== null && val !== undefined && String(val).trim() !== '';\n  })\n);\n\nreturn [{\n  json: {\n    temCodigo: temCodigoPreenchido\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1496,16 +1496,16 @@
     },
     {
       "parameters": {
-        "sendTo": "={{ $('Edit Fields 1').item.json.E-mail}}",
+        "sendTo": "={{ $('Edit Fields 1').item.json['E-mail'] }}",
         "subject": "Cadastro de itens Fiscal",
-        "message": "=Olá!\n\n<br><br>Segue o cadastro de itens abaixo.\n\n<br><br>\n\n<table width=\"100%\" cellpadding=\"6\" cellspacing=\"0\"\n       style=\"border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px;\">\n    <thead>\n        <tr style=\"background-color: #f2f2f2;\">\n            <th style=\"border: 1px solid #ccc;\">Código do item</th>\n            <th style=\"border: 1px solid #ccc;\">Descrição do item</th>\n        </tr>\n    </thead>\n    <tbody>\n    {{\n    $('Aggregate3').item.json.data\n      .filter(d => d[\"Codigo do item\"] && d[\"Desc do item\"])\n      .map(d => `\n        <tr>\n            <td style=\"border: 1px solid #ccc; text-align: center;\">\n                ${d[\"Codigo do item\"]}\n            </td>\n            <td style=\"border: 1px solid #ccc; text-align: center;\">\n                ${d[\"Desc do item\"]}\n            </td>\n        </tr>\n      `).join('')\n    }}\n    </tbody>\n</table>",
+        "message": "=Olá!\n<br><br>Segue o cadastro de itens abaixo.\n<br><br>\n<table width=\"100%\" cellpadding=\"6\" cellspacing=\"0\"\n       style=\"border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px;\">\n    <thead>\n        <tr style=\"background-color: #f2f2f2;\">\n            <th style=\"border: 1px solid #ccc;\">Código do item</th>\n            <th style=\"border: 1px solid #ccc;\">Descrição do item</th>\n        </tr>\n    </thead>\n    <tbody>\n    {{\n    $('Aggregate3').first().json.data\n      .filter(d => d.codigo_IB && d.desc_item)\n      .map(d => `\n        <tr>\n            <td style=\"border: 1px solid #ccc; text-align: center;\">\n                ${d.codigo_IB}\n            </td>\n            <td style=\"border: 1px solid #ccc; text-align: center;\">\n                ${d.desc_item}\n            </td>\n        </tr>\n      `).join('')\n    }}\n    </tbody>\n</table>",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        2720,
-        784
+        2688,
+        768
       ],
       "id": "da3b53a5-c103-45c7-9ba5-de8314415be8",
       "name": "Send a message6",
@@ -1782,6 +1782,14 @@
           "cachedResultName": "Códigos cadastros",
           "cachedResultUrl": "/projects/j1ohQRu38vLkXag5/datatables/6DWdaDtZ7jzdGawi"
         },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "codigo_IB",
+              "keyValue": "={{ $('Get row(s)1').item.json.codigo_IB }}"
+            }
+          ]
+        },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
@@ -1843,6 +1851,14 @@
           "mode": "list",
           "cachedResultName": "Códigos cadastros",
           "cachedResultUrl": "/projects/j1ohQRu38vLkXag5/datatables/6DWdaDtZ7jzdGawi"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "codigo_TH",
+              "keyValue": "={{ $('Get row(s)').item.json.codigo_TH }}"
+            }
+          ]
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -1906,6 +1922,14 @@
           "cachedResultName": "Códigos cadastros",
           "cachedResultUrl": "/projects/j1ohQRu38vLkXag5/datatables/6DWdaDtZ7jzdGawi"
         },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "codigo_salinas",
+              "keyValue": "={{ $('Get row(s)3').item.json.codigo_salinas }}"
+            }
+          ]
+        },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
@@ -1957,6 +1981,93 @@
       ],
       "id": "513c2e28-f1be-49ff-aa0c-30453e07a611",
       "name": "Update row(s)2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a4fd1a6d-98db-4727-afee-6fbc491343e8",
+              "name": "codigo_IB",
+              "value": "={{ $json.codigo_IB }}",
+              "type": "string"
+            },
+            {
+              "id": "d0b9d7e3-649c-486c-8f58-42810ec479be",
+              "name": "desc_item",
+              "value": "={{ $('Loop Over Items').item.json['Nome do item'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        6928,
+        704
+      ],
+      "id": "f40da289-ff18-42b0-9b85-839e52e9866c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "08e6e45e-294f-44c8-8c1a-70727b901f2c",
+              "name": "codigo_TH",
+              "value": "={{ $json.codigo_TH }}",
+              "type": "string"
+            },
+            {
+              "id": "3e383ec5-1a73-49df-9434-9a9188392f09",
+              "name": "desc_item",
+              "value": "={{ $('Loop Over Items').item.json['Nome do item'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        6944,
+        1360
+      ],
+      "id": "50d7e312-22f3-49cf-a8b9-317b272925fd",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a0c29906-2e5f-4603-bf12-26b5c7ff506d",
+              "name": "codigo_salinas",
+              "value": "={{ $json.codigo_salinas }}",
+              "type": "string"
+            },
+            {
+              "id": "e0042cd6-87d8-49fb-a72f-1458ad7e7bd4",
+              "name": "desc_item",
+              "value": "={{ $('Loop Over Items').item.json['Nome do item'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        6896,
+        1968
+      ],
+      "id": "d20533e3-ddbe-4bac-9526-f887bbab52c4",
+      "name": "Edit Fields2"
     }
   ],
   "pinData": {},
@@ -2723,7 +2834,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
@@ -2734,7 +2845,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Edit Fields1",
             "type": "main",
             "index": 0
           }
@@ -2742,6 +2853,39 @@
       ]
     },
     "Update row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
       "main": [
         [
           {
@@ -2762,7 +2906,7 @@
     "callerPolicy": "workflowsFromSameOwner",
     "availableInMCP": false
   },
-  "versionId": "0e740c75-a914-434a-b70c-fe8b91828cda",
+  "versionId": "bcfe93af-7dad-49fb-8629-822a0987f992",
   "meta": {
     "instanceId": "1e7948feed7ad6a9d739915ed2a5fb1a4448b6865bf0a3749eb9703dbe25ec1f"
   },
