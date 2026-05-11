@@ -1,183 +1,139 @@
-# Automação Inteligente de Cadastro de Itens
+# Automacao de Cadastro de Itens de Consumo
 
-Sistema de automação para cadastro completo de itens a partir de e-mails com anexos em PDF, utilizando extração estruturada de dados com inteligência artificial, validação fiscal de NCM, classificação contábil automatizada por banco (IB, TH e Salinas) e inserção direta em banco de dados.
-
----
-
-## Sumário
-
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Arquitetura do Fluxo](#arquitetura-do-fluxo)
-- [Funcionamento](#funcionamento)
-- [Data Tables](#data-tables)
-- [Regras de Negócio](#regras-de-negócio)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Tratamento de Erros](#tratamento-de-erros)
-- [Benefícios](#benefícios)
-- [Evoluções Futuras](#evoluções-futuras)
-- [Status](#status)
+Este repositorio contem dois workflows de automacao desenvolvidos em n8n para o cadastro de itens de consumo fiscal nos bancos de dados das empresas do grupo (INBRANDS, TOMMY e SALINAS). Cada workflow atende a um publico e proposito diferente.
 
 ---
 
-## Sobre o Projeto
+## Visao Geral dos Workflows
 
-Este projeto foi desenvolvido para automatizar o processo de cadastro de itens recebidos por e-mail, eliminando atividades manuais, reduzindo falhas operacionais e garantindo padronização das informações cadastradas em múltiplos bancos de dados simultaneamente.
+### 1. Cadastro itens de consumo completo (fluxo principal — usuarios externos)
 
-O sistema realiza:
+**Arquivo:** `Cadastro_itens_de_consumo_completo.json`
 
-- Recebimento de solicitações via formulário
-- Identificação e processamento de anexos em PDF
-- Extração estruturada de dados via IA (Information Extractor)
-- Iteração item a item com Loop Over Items
-- Validação do NCM via IA dedicada e consulta ao banco de dados
-- Consulta de código padrão em planilhas de controle (IB, TH e Salinas)
-- Classificação contábil inteligente por banco (Classificador Conta IB, TH e Salinas)
-- Inserção automática em Microsoft SQL para cada banco
-- Atualização de registros após inserção
-- Envio de e-mail com resumo do processamento
+Este e o fluxo principal da automacao. Ele e voltado para usuarios que submetem solicitacoes de cadastro de novos itens por meio de um formulario, podendo enviar multiplos itens de uma vez via PDF ou planilha. O processo inclui validacao de NCM, classificacao contabil por IA e insercao direta no banco de dados.
 
----
+#### Fluxo de execucao
 
-## Arquitetura do Fluxo
+**Entrada e extracao de dados**
 
-```
-Form Submission (Trigger)
-  ↓
-Edit Fields → Extract from File (PDF)
-  ↓
-IA - Information Extractor (Google Gemini)
-  ↓
-Split Out → Edit Fields → Aggregate → Code in JavaScript
-  ↓
-If (tem código preenchido?)
-  ├── [NÃO] → Responde e-mail ao solicitante
-  └── [SIM] → Loop Over Items
-                ↓
-              IA - Validador NCM
-                ├── [INVÁLIDO] → Tabela 101 → E-mail suporte + E-mail CNPJ errado
-                └── [VÁLIDO]  → Decisão do Banco de Dados
-                                  ├── [IB]      → SQL → Classificador IB      → SQL Insert → Update → E-mail
-                                  ├── [TH]      → SQL → Classificador TH      → SQL Insert → Update → E-mail
-                                  └── [Salinas] → SQL → Classificador Salinas → SQL Insert → Update → E-mail
-```
+O processo se inicia com o envio de um formulario (`On form submission`). Um no de extracao de texto (`Extract from File`) le o PDF ou arquivo enviado. Um agente de IA (`Information Extractor`, via Google Gemini) identifica os campos relevantes do documento e retorna os dados estruturados (nome do item, NCM, CST, banco de destino, e-mail do solicitante, entre outros).
 
----
+**Iteracao por item**
 
-## Funcionamento
+Os dados extraidos passam por um `Split Out` e depois por um `Loop Over Items`, garantindo que cada item do documento seja processado individualmente e de forma sequencial.
 
-### 1. Recebimento via Formulário
+**Validacao do NCM por IA**
 
-O fluxo é iniciado por um **Form Submission**. Os dados passam pelo **Edit Fields** e o PDF é extraído com o node **Extract from File**.
+Cada item passa por um agente de IA (`Validar NCM`) que verifica se o NCM informado e compativel com a descricao do item. O resultado determina o caminho seguinte:
 
-### 2. Extração de Dados com IA
+- NCM valido e coerente com o item: segue para a verificacao no banco.
+- NCM invalido ou inconsistente com a descricao: um e-mail automatico e enviado ao suporte informando o problema. O item nao e cadastrado.
+- NCM inexistente na tabela `CLASSIF_FISCAL` do banco: um e-mail automatico e enviado ao solicitante informando que o NCM esta errado e que o CNPJ esta arredado (bloqueado). O item nao e cadastrado.
 
-O texto do PDF é processado pela IA **Information Extractor** (Google Gemini), que identifica os campos necessários ao cadastro: descrição do item, NCM, unidade de medida, código do fornecedor e demais atributos.
+**Verificacao do NCM no banco de dados**
 
-### 3. Preparação dos Dados
+O NCM valido e consultado na tabela `CLASSIF_FISCAL` via Microsoft SQL. Se o NCM nao existir no banco, o fluxo segue para o envio de notificacao de erro. Se existir, o fluxo continua para a decisao de banco de destino.
 
-Os dados passam pelo **Split Out**, **Edit Fields**, **Aggregate** e um **Code in JavaScript** para normalização e verificação de campos preenchidos.
+**Decisao do banco de destino**
 
-### 4. Verificação de Código Preenchido
+Um no Switch (`Decisao do Banco de dados`) identifica a empresa de destino com base no campo `BANCO` do item:
 
-Um **If** verifica se ao menos um dos códigos (`codigo_IB`, `codigo_TH`, `codigo_salinas`) está preenchido. Caso nenhum esteja, o sistema responde automaticamente ao solicitante via e-mail.
+- `09` — INBRANDS
+- `15` — TOMMY
+- `06` — SALINAS
 
-### 5. Iteração por Item
+Cada ramo segue para a conexao SQL correspondente ao banco da empresa.
 
-O **Loop Over Items** percorre cada item extraído individualmente para as etapas seguintes.
+**Classificacao da conta contabil por IA**
 
-### 6. Validação do NCM
+Para cada empresa, um agente de IA (`Classificador conta IB`, `Classificador conta TH`, `Classificador conta Salinas`) recebe a descricao do item e decide qual conta contabil deve ser utilizada, consultando uma lista de contas pre-definida como ferramenta (`Contas IB`, `Contas TH`, `Contas Salinas`).
 
-A IA **Validador NCM** analisa o NCM informado e decide se ele é compatível com a descrição do item.
+- Se a conta contabil for identificada: o fluxo segue para geracao do codigo do item e insercao no banco.
+- Se nenhuma conta se encaixar: um e-mail e enviado a um responsavel para tratativa manual.
 
-- **Inválido**: passa pela Tabela 101, envia e-mail ao suporte informando incompatibilidade e segundo e-mail sobre problema com CNPJ.
-- **Válido**: segue para a decisão do banco de dados.
+**Geracao do codigo do item**
 
-### 7. Decisão do Banco de Dados
+O ultimo codigo cadastrado e recuperado do banco (`Get row(s)`). Um no de codigo JavaScript extrai o prefixo alfabetico e o numero sequencial, incrementa o numero e gera o novo codigo formatado (ex.: `IF66480` torna-se `IF66480`).
 
-Um **If** direciona o item para o banco correto. Cada banco possui fluxo independente com os mesmos passos:
+**Insercao no banco de dados**
 
-**Para cada banco (IB / TH / Salinas):**
+O comando `INSERT INTO CADASTRO_ITEM_FISCAL` e executado com todos os campos necessarios:
 
-1. Consulta ao **Microsoft SQL** para verificar se o NCM já existe
-2. **Get Mold** busca o modelo correspondente ao item
-3. **Code node** separa e formata o código conforme padrão do banco
-4. **Edit Fields** ajusta os valores para inserção
-5. **Classificador Conta** (IA dedicada por banco) retorna a conta contábil mais adequada — se nenhuma se encaixar, e-mail é enviado ao responsável
-6. **Code node** monta o comando SQL de inserção
-7. **Microsoft SQL** executa o INSERT
-8. **If** valida o sucesso da inserção
-9. **Edit Field + Update Mold** atualizam o registro na planilha de controle
-10. **Send a message** envia confirmação por e-mail
+- `ITEM_DESCRICAO`
+- `CODIGO_ITEM`
+- `UNIDADE` (fixo: `UN`)
+- `TRIBUT_ORIGEM` (CST)
+- `CLASSIF_FISCAL` (NCM)
+- `CONTA_CONTABIL`
+- `INDICADOR_CFOP` (fixo: `13`)
+- `ITEM_FISCAL_GRUPO`
+- `TIPO_ITEM_SPED` (fixo: `07`)
+- `IDENT_UTILIZACAO_IMOB` (fixo: `9`)
+
+Em caso de erro na insercao, o workflow continua e registra a falha sem travar o loop.
+
+**Confirmacao por e-mail**
+
+Apos a insercao bem-sucedida, um e-mail de com os códigos e as descrições dos itens e enviado ao usuario que submeteu o formulario, informando que o item foi cadastrado com sucesso.
 
 ---
 
-## Data Tables
+### 2. Cadastro itens de consumo (fluxo interno — uso dos analistas)
 
-A planilha de dados serve como base auxiliar com duas funções:
+**Arquivo:** `Cadastro_itens_de_consumo.json`
 
-- Armazenar as **contas contábeis** utilizadas pelos Classificadores de IA
-- Manter em **uma única linha** os códigos dos itens de todos os bancos (IB, TH e Salinas), servindo como referência cruzada para identificação e padronização
+Este fluxo e destinado ao uso interno pelos analistas da equipe fiscal. Ele e acionado manualmente via formulario interno e pula toda a etapa de validacao de NCM por IA, partindo diretamente da decisao do banco de destino e da classificacao de conta contabil. E utilizado em situacoes onde o analista ja tem os dados validados e precisa cadastrar um item de forma direta e rapida.
 
----
+#### Diferencas em relacao ao fluxo completo
 
-## Regras de Negócio
+- Nao ha leitura de PDF nem extracao por IA de campos.
+- Nao ha validacao de NCM (nem por IA nem por consulta ao banco antes do cadastro).
+- O trigger e um formulario interno (`On form submission1`) preenchido diretamente pelo analista.
+- Os dados ja chegam estruturados, sem necessidade de iteracao por loop.
+- O fluxo segue diretamente para a decisao do banco de destino e classificacao da conta contabil por IA.
 
-- Nenhum item é cadastrado sem NCM válido e compatível com a descrição
-- A classificação contábil é obrigatória para todos os bancos
-- Se nenhuma conta contábil se encaixar, o responsável é notificado por e-mail
-- Cada banco (IB, TH, Salinas) possui fluxo de validação, classificação e inserção independente
-- Todo item processado é registrado e atualizado para auditoria
-- O fluxo só finaliza após o processamento completo de todos os itens do anexo
-- Em caso de erro crítico, o processo é interrompido e o responsável é notificado
+#### Fluxo de execucao
 
----
-
-## Tecnologias Utilizadas
-
-- **n8n** — Orquestração e automação do workflow
-- **Google Gemini** — IA para extração estruturada e validação de NCM
-- **IA Classificador Conta** — Classificação contábil por banco (IB, TH e Salinas)
-- **Microsoft SQL Server** — Banco de dados relacional
-- **Google Sheets** — Planilha auxiliar para contas contábeis e referência de códigos
-- **Gmail** — Envio e recebimento de e-mails
-- **PDF Extractor** — Extração de texto de arquivos PDF
+1. Formulario interno preenchido pelo analista com os dados do item.
+2. Switch decide o banco de destino (INBRANDS, TOMMY ou SALINAS) com base no campo `Banco de dados`.
+3. Agente de IA classifica a conta contabil adequada para o item.
+4. Caso nenhuma conta se encaixe, um e-mail e enviado ao responsavel.
+5. Codigo do item e gerado incrementando o ultimo codigo cadastrado no banco.
+6. `INSERT INTO CADASTRO_ITEM_FISCAL` e executado no banco correspondente.
+7. E-mail de confirmacao e enviado ao analista.
 
 ---
 
-## Tratamento de Erros
+## Estrutura dos Bancos de Dados
 
-- **NCM inválido** → e-mail ao suporte e ao solicitante com a inconsistência
-- **NCM incompatível com a descrição** → notificação automática via e-mail
-- **Nenhuma conta contábil compatível** → e-mail enviado ao responsável para análise manual
-- **Nenhum código preenchido** → e-mail automático ao solicitante
-- **Falha na inserção** → verificação via If pós-inserção com tratamento do erro
-- **Erros não tratados** → registrados para análise posterior
+Os tres bancos de destino sao identificados pelos 2 primeiros números do CNPJ que esta na nota e cada um possui sua propria conexao SQL configurada no n8n:
 
----
-
-## Benefícios
-
-- Eliminação de cadastros manuais em múltiplos bancos simultaneamente
-- Padronização e validação fiscal automatizada via IA
-- Classificação contábil inteligente e auditável
-- Rastreabilidade completa (planilha + banco + e-mail)
-- Escalabilidade para novos bancos sem redesenho do fluxo principal
-- Redução de erros humanos e retrabalho
+| Empresa  | Codigo |
+|----------|--------|
+| INBRANDS | 09     |
+| TOMMY    | 15     |
+| SALINAS  | 06     |
 
 ---
 
-## Evoluções Futuras
+## Notificacoes e Tratativas de Erro
 
-- Integração com validação automática da tabela TIPI atualizada
-- Cache de classificações contábeis recorrentes
-- Dashboard de monitoramento em tempo real
-- Sistema de logs centralizado
-- Versionamento de regras de cadastro
-- Ativação dos nodes SQL atualmente em modo desativado para produção
-- Transformação em solução interna escalável para outros tipos de cadastro
+| Situacao | Acao automatica |
+|---|---|
+| NCM invalido ou inconsistente com o item | E-mail enviado ao suporte com detalhes do problema |
+| NCM nao encontrado no banco (`CLASSIF_FISCAL`) | E-mail enviado ao solicitante informando que o CNPJ esta arredado |
+| Nenhuma conta contabil compativel encontrada | E-mail enviado a um responsavel para tratativa manual |
+| Insercao no banco bem-sucedida | E-mail de confirmacao enviado ao solicitante |
 
 ---
 
-## Status
+## Quando usar cada workflow
 
-Projeto em operação com evolução contínua. Nodes SQL em modo **Deactivated** indicam ambiente de homologação — ativação para produção é etapa planejada nas próximas evoluções.
+Use o **fluxo completo** (`Cadastro_itens_de_consumo_completo.json`) quando:
+- Um usuario externo ou solicitante precisa submeter itens para cadastro.
+- O processo precisa incluir validacao automatica do NCM.
+- Ha um PDF ou arquivo com multiplos itens a serem processados.
+
+Use o **fluxo interno** (`Cadastro_itens_de_consumo.json`) quando:
+- Um analista precisa cadastrar um item de forma direta, sem passar pela validacao de NCM.
+- Os dados ja estao verificados e o objetivo e apenas executar o cadastro no banco.
